@@ -2,13 +2,14 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { changeGatewayName } from "../../api-client/gateway";
 import GatewayDetails from "../../components/elements/GatewayDetails";
 import { LoadingSpinner } from "../../components/layout/LoadingSpinner";
 import { services } from "../../services/ServiceLocatorServer";
 import { getErrorMessage } from "../../constants/ui";
 import { ERROR_CODES } from "../../services/Errors";
+import { SocketContext } from "../../context/socket";
 
 import GatewayDetailViewModel from "../../models/GatewayDetailViewModel";
 import { getGatewayDetailsPresentation } from "../../components/presentation/gatewayDetails";
@@ -28,17 +29,33 @@ const GatewayDetailsPage: NextPage<GatewayDetailsData> = ({
     await router.replace(router.asPath);
   };
 
+  const { socket, setSocket } = useContext(SocketContext);
+
+  useEffect(() => {
+    console.log(socket);
+    socket.on("connect", () => {
+      console.log("Socket connected on details page");
+    });
+
+    // todo on not working
+    socket.on("gateway updated", (gatewayName) => {
+      console.log("gateway updated successfully details page", gatewayName);
+    });
+  }, [socket]);
+
   const changeName = async (name: string) => {
     if (name === viewModel.gateway?.name) return true;
     setIsLoading(true);
     let isSuccessful = true;
+    console.log("changing name!");
+    socket.emit("gateway name updated", name);
     try {
       await changeGatewayName(viewModel.gateway?.uid || "", name);
     } catch (e) {
       isSuccessful = false;
     }
     setIsLoading(false);
-    await refreshData();
+    // await refreshData();
     return isSuccessful;
   };
 

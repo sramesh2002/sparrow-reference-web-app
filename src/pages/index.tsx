@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { Carousel, Alert } from "antd";
 import { CarouselRef } from "antd/lib/carousel";
+import { io, Socket } from "socket.io-client";
 import GatewayCard from "../components/elements/GatewayCard";
 import { services } from "../services/ServiceLocatorServer";
 import Gateway from "../services/alpha-models/Gateway";
@@ -11,16 +12,49 @@ import { ERROR_CODES } from "../services/Errors";
 import CarouselArrowFixRight from "../components/elements/CarouselArrowFixRight";
 import CarouselArrowFixLeft from "../components/elements/CarouselArrowFixLeft";
 import { getCombinedGatewayNodeInfo } from "../components/presentation/gatewayNodeInfo";
+import { ServerToClientEvents, ClientToServerEvents } from "./api/socket";
 import styles from "../styles/Home.module.scss";
 import Config from "../../config";
+import { SocketContext } from "../context/socket";
 
 type HomeData = {
   gatewayNodeData: Gateway[];
   err?: string;
 };
 
+let socketIO: Socket<ServerToClientEvents, ClientToServerEvents>;
+
 const Home: NextPage<HomeData> = ({ gatewayNodeData, err }) => {
   const carouselRef = useRef<CarouselRef>(null);
+  // const [socket, setSocket] = useState(null);
+  const { socket, setSocket } = useContext(SocketContext);
+
+  useEffect(() => {
+    // todo can this be reusable somehow?
+    const socketInitializer = async () => {
+      await fetch("/api/socket");
+      socketIO = io();
+
+      setSocket(socketIO);
+
+      socketIO.on("connect", () => {
+        console.log("Socket client connected");
+      });
+
+      // todo on not working
+      socketIO.on("gateway updated", (gatewayName) => {
+        console.log("gateway updated successfully index page", gatewayName);
+      });
+    };
+
+    if (!socket) {
+      socketInitializer();
+    }
+  }, [setSocket]);
+
+  // const handleClick = () => {
+  //   socket.emit("click button");
+  // };
 
   const sparrowInfoMessage = (
     <span>
