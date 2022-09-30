@@ -170,6 +170,9 @@ export default class PrismaDatastoreEventHandler
         case ReadingSchemaValueType.SCALAR_FLOAT:
           storedValue = (value as any)[primaryValue] as number;
           break;
+        case ReadingSchemaValueType.STRING:
+          storedValue = (value as any)[primaryValue] as string;
+          break;
         case ReadingSchemaValueType.COMPOSITE:
         default:
           storedValue = value;
@@ -188,7 +191,7 @@ export default class PrismaDatastoreEventHandler
       if (
         typeof schema?.prereq !== "object" ||
         typeof value !== "object" ||
-        !_.isEqual({ ...schema.prereq, ...value }, (value))
+        !_.isEqual({ ...schema.prereq, ...value }, value)
       ) {
         return Promise.resolve("skipped");
       }

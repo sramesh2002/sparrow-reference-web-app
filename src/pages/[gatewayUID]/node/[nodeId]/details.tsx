@@ -274,6 +274,18 @@ const NodeDetails: NextPage<NodeDetailsData> = ({ viewModel, err }) => {
                     </span>
                   </Card>
                 </Col>
+                <Col xs={12} sm={12} lg={5}>
+                  <Card
+                    className={detailsStyles.card}
+                    data-testid="door-status"
+                  >
+                    Door Status
+                    <br />
+                    <span className={detailsStyles.dataNumber}>
+                      {viewModel.node.doorStatus}
+                    </span>
+                  </Card>
+                </Col>
               </Row>
               <Row>
                 <Col xs={12} sm={12} md={8} lg={8}>
@@ -399,6 +411,27 @@ const NodeDetails: NextPage<NodeDetailsData> = ({ viewModel, err }) => {
                       <NodeDetailsBarChart
                         label="Count"
                         data={viewModel.readings.count}
+                        chartColor="#ff7e6d"
+                        schema={CountSensorSchema}
+                      />
+                    ) : (
+                      HISTORICAL_SENSOR_DATA_MESSAGE.NO_COUNT_HISTORY
+                    )}
+                  </Card>
+                </Col>
+                <Col xs={24} sm={24} lg={12}>
+                  <Card className={detailsStyles.nodeChart}>
+                    <h3>Door Status</h3>
+                    <p
+                      data-testid="last-seen-count"
+                      className={detailsStyles.nodeChartTimestamp}
+                    >
+                      Last updated {viewModel.node.lastActivity}
+                    </p>
+                    {viewModel.readings?.doorStatus.length ? (
+                      <NodeDetailsBarChart
+                        label="Count"
+                        data={viewModel.readings.doorStatus}
                         chartColor="#ff7e6d"
                         schema={CountSensorSchema}
                       />

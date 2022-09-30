@@ -5,7 +5,7 @@ import {
   Prisma,
   ReadingSource,
   ReadingSourceType,
-  ReadingSchemaValueType as ReadingSchemaValueType,
+  ReadingSchemaValueType,
 } from "@prisma/client";
 import Config from "../../../config";
 import {
@@ -59,7 +59,7 @@ function nodeEvent(event: string) {
 }
 
 function referenceSensorName(item: string) {
-  return "Reference Sensor Board " + item;
+  return `Reference Sensor Board ${item}`;
 }
 
 type ReadingSchemaSpec = Prisma.JsonObject & { __primsary?: string };
@@ -71,7 +71,7 @@ type ReadingSchemaWitHpec = { spec: ReadingSchemaSpec } & Prisma.InputJsonValue;
  */
 const __primary = "__primary";
 function readingSchemaDefaults<R extends ReadingSchemaWitHpec>(r: R): R {
-  const spec = r.spec;
+  const { spec } = r;
   if (!spec.__primary) {
     // no existing __primary property
     const keys = Object.keys(spec);
@@ -164,6 +164,21 @@ const standardSchemas: BareReadingSchema[] = [
         latitude: 42.76392871,
         longitude: -84.64847525,
       },
+    },
+  },
+  {
+    name: NodeSensorTypeNames.DOOR_STATUS,
+    measure: "contactSwitch",
+    uuid: "13f62e07-45dd-43a1-aaec-c57813ea816d",
+    displayName: referenceSensorName("Door Status"),
+    displayMeasure: "Door Status",
+    eventName: nodeEvent("switch.qo"),
+    valueType: ReadingSchemaValueType.STRING,
+    unit: "",
+    unitSymbol: "",
+    spec: {
+      contactSwitch: "CLOSED",
+      __primary: "contactSwitch",
     },
   },
 

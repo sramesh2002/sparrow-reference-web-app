@@ -103,6 +103,8 @@ export function sparrowNodeFromPrismaNode(
     voltage: asNumber(findReading(map, NodeSensorTypeNames.VOLTAGE)),
     total: asNumber(findReading(map, NodeSensorTypeNames.PIR_MOTION_TOTAL)),
     count: asNumber(findReading(map, NodeSensorTypeNames.PIR_MOTION)),
+    doorStatus:
+      asString(findReading(map, NodeSensorTypeNames.DOOR_STATUS)) || "",
   };
 
   const rssi = asNumber(

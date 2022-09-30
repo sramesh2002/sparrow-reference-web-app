@@ -14,6 +14,7 @@ interface NodeDetailViewModel {
     voltage: string;
     count: string;
     total: string;
+    doorStatus: string;
     bars: SignalStrengths;
     barsIconPath: string | null;
     barsTooltip: string | null;
@@ -25,6 +26,7 @@ interface NodeDetailViewModel {
     voltage: { when: string; value: number }[];
     count: { when: string; value: number }[];
     total: { when: string; value: number }[];
+    doorStatus: { when: string; value: string }[];
   };
   readOnly?: boolean;
 }

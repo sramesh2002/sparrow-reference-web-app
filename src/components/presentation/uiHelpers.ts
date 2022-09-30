@@ -61,6 +61,32 @@ export const getFormattedChartData = (
   return [];
 };
 
+export const getFormattedDoorStatusChartData = (
+  readings: Reading<unknown>[],
+  readingSchema: ReadingSchema<unknown>
+) => {
+  if (readings.length) {
+    const formattedData = sortBy(
+      uniqBy(
+        readings
+          .filter((reading) => reading.schema === readingSchema)
+          .filter((filteredEvents) => filteredEvents.value === "OPEN")
+          .map((filteredEvent) => {
+            const chartDataObj = {
+              when: filteredEvent.captured,
+              value: 1,
+            };
+            return chartDataObj;
+          }),
+        "when"
+      ),
+      "when"
+    );
+    return formattedData;
+  }
+  return [];
+};
+
 export const getFormattedTemperatureData = (
   temperature: number | undefined
 ) => {

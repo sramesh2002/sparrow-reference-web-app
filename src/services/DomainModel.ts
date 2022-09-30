@@ -283,6 +283,7 @@ export const enum NodeSensorTypeNames {
   HUMIDITY = "humidity",
   TEMPERATURE = "temperature",
   AIR_PRESSURE = "air_pressure",
+  DOOR_STATUS = "door_status",
   PROVISIONING = "provisioning",
 }
 

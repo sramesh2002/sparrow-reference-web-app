@@ -46,6 +46,7 @@ import CountSensorSchema from "../alpha-models/readings/CountSensorSchema";
 import TemperatureSensorSchema from "../alpha-models/readings/TemperatureSensorSchema";
 import TotalSensorSchema from "../alpha-models/readings/TotalSensorSchema";
 import PressureSensorSchema from "../alpha-models/readings/PressureSensorSchema";
+import DoorSwitchSensorSchema from "../alpha-models/readings/DoorSwitchSensorSchema";
 
 async function manageGatewayImport(
   bi: BulkImport,
@@ -343,23 +344,35 @@ export class PrismaDataProvider implements DataProvider {
     map.set(NodeSensorTypeNames.AIR_PRESSURE, PressureSensorSchema);
     map.set(NodeSensorTypeNames.PIR_MOTION, CountSensorSchema);
     map.set(NodeSensorTypeNames.PIR_MOTION_TOTAL, TotalSensorSchema);
+    map.set(NodeSensorTypeNames.DOOR_STATUS, DoorSwitchSensorSchema);
 
     const result: ReadingDEPRECATED<unknown>[] = [];
 
     readings.forEach((reading) => {
-      const alphaSchema = map.get(reading.sensor.schema.name);
-      if (alphaSchema) {
-        const { scale } = reading.sensor.schema;
+      if (typeof reading.value !== "string") {
+        const alphaSchema = map.get(reading.sensor.schema.name);
+        if (alphaSchema) {
+          const { scale } = reading.sensor.schema;
 
-        const alphaReading = {
-          value: scale ? Number(reading.value) / scale : reading.value,
-          captured: reading.when.toISOString(),
-          schema: alphaSchema,
-        };
-        result.push(alphaReading);
+          const alphaReading = {
+            value: scale ? Number(reading.value) / scale : reading.value,
+            captured: reading.when.toISOString(),
+            schema: alphaSchema,
+          };
+          result.push(alphaReading);
+        }
+      } else {
+        const alphaSchema = map.get(reading.sensor.schema.name);
+        if (alphaSchema) {
+          const alphaReading = {
+            value: reading.value,
+            captured: reading.when.toISOString(),
+            schema: alphaSchema,
+          };
+          result.push(alphaReading);
+        }
       }
     });
-
     return result;
   }
 

@@ -133,6 +133,7 @@ enum ReadingSchemaValueType {
   SCALAR_INT
   SCALAR_FLOAT
   COMPOSITE
+  STRING
 }
 
 // describes the nature of a sensor reading and how to extract it from notehub data

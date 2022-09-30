@@ -15,6 +15,7 @@ import {
   getFormattedTotalData,
   calculateLoraSignalStrength,
   calculateSignalTooltip,
+  getFormattedDoorStatusChartData,
 } from "./uiHelpers";
 import Node from "../../services/alpha-models/Node";
 import Gateway from "../../services/alpha-models/Gateway";
@@ -25,6 +26,7 @@ import PressureSensorSchema from "../../services/alpha-models/readings/PressureS
 import VoltageSensorSchema from "../../services/alpha-models/readings/VoltageSensorSchema";
 import CountSensorSchema from "../../services/alpha-models/readings/CountSensorSchema";
 import TotalSensorSchema from "../../services/alpha-models/readings/TotalSensorSchema";
+import DoorSwitchSensorSchema from "../../services/alpha-models/readings/DoorSwitchSensorSchema";
 import Config from "../../../config";
 
 // eslint-disable-next-line import/prefer-default-export
@@ -40,7 +42,9 @@ export function getNodeDetailsPresentation(
     node: node
       ? {
           name: node.name || NODE_MESSAGE.NO_NAME,
-          lastActivity: node.lastActivity ? getFormattedLastSeen(node.lastActivity) : NODE_MESSAGE.NEVER_SEEN,
+          lastActivity: node.lastActivity
+            ? getFormattedLastSeen(node.lastActivity)
+            : NODE_MESSAGE.NEVER_SEEN,
           location: node?.location || NODE_MESSAGE.NO_LOCATION,
           temperature:
             getFormattedTemperatureData(node.temperature) ||
@@ -55,6 +59,7 @@ export function getNodeDetailsPresentation(
             getFormattedVoltageData(node.voltage) || SENSOR_MESSAGE.NO_VOLTAGE,
           count: getFormattedCountData(node.count) || SENSOR_MESSAGE.NO_COUNT,
           total: getFormattedTotalData(node.total) || SENSOR_MESSAGE.NO_TOTAL,
+          doorStatus: node.doorStatus || "N/A",
           bars: node.bars || "0",
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           barsIconPath: calculateLoraSignalStrength(node.bars || "0"),
@@ -69,6 +74,10 @@ export function getNodeDetailsPresentation(
           voltage: getFormattedChartData(readings, VoltageSensorSchema),
           count: getFormattedChartData(readings, CountSensorSchema),
           total: getFormattedChartData(readings, TotalSensorSchema),
+          doorStatus: getFormattedDoorStatusChartData(
+            readings,
+            DoorSwitchSensorSchema
+          ),
         }
       : undefined,
     readOnly: Config.readOnly,

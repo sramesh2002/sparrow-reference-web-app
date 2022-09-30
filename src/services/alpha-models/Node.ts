@@ -12,6 +12,7 @@ interface Node {
   count?: number;
   total?: number;
   gatewayUID: string;
+  doorStatus?: string;
   /**
    * The signal strength for this node - lora bars.
    */
