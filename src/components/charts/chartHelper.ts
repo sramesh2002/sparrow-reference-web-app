@@ -20,12 +20,14 @@ import PressureSensorSchema from "../../services/alpha-models/readings/PressureS
 import ReadingSchema from "../../services/alpha-models/readings/ReadingSchema";
 import TemperatureSensorSchema from "../../services/alpha-models/readings/TemperatureSensorSchema";
 import VoltageSensorSchema from "../../services/alpha-models/readings/VoltageSensorSchema";
+import SalinitySensorSchema from "../../services/alpha-models/readings/SalinitySensorSchema"; // Sreedhar
 import {
   getFormattedCountData,
   getFormattedHumidityData,
   getFormattedPressureData,
   getFormattedTemperatureData,
   getFormattedVoltageData,
+  getFormattedSalinityData,
 } from "../presentation/uiHelpers";
 
 ChartJS.register(
@@ -93,6 +95,9 @@ export function getTooltipDisplayText(
       break;
     case CountSensorSchema:
       valueDisplay = getFormattedCountData(value) || "";
+      break;
+    case SalinitySensorSchema: //  Sreedhar
+      valueDisplay = getFormattedSalinityData(value) || "";
       break;
     default:
       // eslint-disable-next-line no-console

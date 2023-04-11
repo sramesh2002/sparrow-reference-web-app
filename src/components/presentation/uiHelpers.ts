@@ -95,6 +95,15 @@ export const getFormattedVoltageData = (voltage: number | undefined) => {
   return null;
 };
 
+export const getFormattedSalinityData = (salinity: number | undefined) => {
+  //  Sreedhar
+  if (salinity !== undefined) {
+    const formattedData = `${salinity.toFixed(2)}ppm`;
+    return formattedData;
+  }
+  return null;
+};
+
 export const getFormattedCountData = (count: number | undefined) => {
   if (count !== undefined) {
     const formattedData = `${count}`;

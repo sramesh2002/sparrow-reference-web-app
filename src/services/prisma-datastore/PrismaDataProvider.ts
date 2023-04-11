@@ -35,6 +35,7 @@ import CountSensorSchema from "../alpha-models/readings/CountSensorSchema";
 import TemperatureSensorSchema from "../alpha-models/readings/TemperatureSensorSchema";
 import TotalSensorSchema from "../alpha-models/readings/TotalSensorSchema";
 import PressureSensorSchema from "../alpha-models/readings/PressureSensorSchema";
+import SalinitySensorSchema from "../alpha-models/readings/SalinitySensorSchema";
 
 /**
  * Implements the DataProvider service using Prisma ORM.
@@ -218,6 +219,7 @@ export class PrismaDataProvider implements DataProvider {
     map.set(NodeSensorTypeNames.VOLTAGE, VoltageSensorSchema);
     map.set(NodeSensorTypeNames.TEMPERATURE, TemperatureSensorSchema);
     map.set(NodeSensorTypeNames.HUMIDITY, HumiditySensorSchema);
+    map.set(NodeSensorTypeNames.SALINITY, SalinitySensorSchema);
     map.set(NodeSensorTypeNames.AIR_PRESSURE, PressureSensorSchema);
     map.set(NodeSensorTypeNames.PIR_MOTION, CountSensorSchema);
     map.set(NodeSensorTypeNames.PIR_MOTION_TOTAL, TotalSensorSchema);

@@ -20,6 +20,7 @@ import NodeDetailViewModel from "../../../../models/NodeDetailViewModel";
 import { getNodeDetailsPresentation } from "../../../../components/presentation/nodeDetails";
 import { ERROR_CODES } from "../../../../services/Errors";
 import TemperatureSensorSchema from "../../../../services/alpha-models/readings/TemperatureSensorSchema";
+import SalinitySensorSchema from "../../../../services/alpha-models/readings/SalinitySensorSchema"; //  Sreedhar
 import HumiditySensorSchema from "../../../../services/alpha-models/readings/HumiditySensorSchema";
 import VoltageSensorSchema from "../../../../services/alpha-models/readings/VoltageSensorSchema";
 import PressureSensorSchema from "../../../../services/alpha-models/readings/PressureSensorSchema";
@@ -231,6 +232,15 @@ const NodeDetails: NextPage<NodeDetailsData> = ({ viewModel, err }) => {
                   </Card>
                 </Col>
                 <Col xs={12} sm={12} lg={5}>
+                  <Card className={detailsStyles.card} data-testid="salinity">
+                    Salinity
+                    <br />
+                    <span className={detailsStyles.dataNumber}>
+                      {viewModel.node.salinity}
+                    </span>
+                  </Card>
+                </Col>
+                <Col xs={12} sm={12} lg={5}>
                   <Card className={detailsStyles.card} data-testid="humidity">
                     Humidity
                     <br />
@@ -317,6 +327,27 @@ const NodeDetails: NextPage<NodeDetailsData> = ({ viewModel, err }) => {
                         data={viewModel.readings.temperature}
                         chartColor="#59d2ff"
                         schema={TemperatureSensorSchema}
+                      />
+                    ) : (
+                      HISTORICAL_SENSOR_DATA_MESSAGE.NO_TEMPERATURE_HISTORY
+                    )}
+                  </Card>
+                </Col>
+                <Col xs={24} sm={24} lg={12}>
+                  <Card className={detailsStyles.nodeChart}>
+                    <h3>Salinity</h3>
+                    <p
+                      data-testid="last-seen-salinity"
+                      className={detailsStyles.nodeChartTimestamp}
+                    >
+                      Last updated {viewModel.node.lastActivity}
+                    </p>
+                    {viewModel.readings?.salinity.length ? (
+                      <NodeDetailsLineChart
+                        label="Salinity"
+                        data={viewModel.readings.salinity}
+                        chartColor="#ff8659"
+                        schema={SalinitySensorSchema}
                       />
                     ) : (
                       HISTORICAL_SENSOR_DATA_MESSAGE.NO_TEMPERATURE_HISTORY

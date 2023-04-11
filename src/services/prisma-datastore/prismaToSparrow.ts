@@ -94,6 +94,7 @@ export function sparrowNodeFromPrismaNode(
     lastActivity: prismaNode.lastSeenAt?.toString() || "",
     bars: LoraSignalMetricsToSignalStrengths(),
     temperature: asNumber(findReading(map, NodeSensorTypeNames.TEMPERATURE)),
+    salinity: asNumber(findReading(map, NodeSensorTypeNames.SALINITY)),
     humidity: asNumber(findReading(map, NodeSensorTypeNames.HUMIDITY)),
     // todo - scaling should be driven by the sensor reading schema, but for now hard-coding to 100
     pressure: downscale(
@@ -115,6 +116,7 @@ export function sparrowNodeFromPrismaNode(
   if (node.temperature === undefined) delete node.temperature;
   if (node.humidity === undefined) delete node.humidity;
   if (node.pressure === undefined) delete node.pressure;
+  if (node.salinity === undefined) delete node.salinity;
   if (node.voltage === undefined) delete node.voltage;
   if (node.total === undefined) delete node.total;
   if (node.count === undefined) delete node.count;

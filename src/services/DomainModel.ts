@@ -281,6 +281,7 @@ export const enum NodeSensorTypeNames {
   PIR_MOTION = "pir_motion",
   PIR_MOTION_TOTAL = "pir_motion_total",
   HUMIDITY = "humidity",
+  SALINITY = "salinity",
   TEMPERATURE = "temperature",
   AIR_PRESSURE = "air_pressure",
   PROVISIONING = "provisioning",

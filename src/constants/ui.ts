@@ -13,6 +13,7 @@ const SENSOR_MESSAGE = {
   NO_HUMIDITY: "—",
   NO_PRESSURE: "—",
   NO_TEMPERATURE: "—",
+  NO_SALINITY: "—", //  Sreedhar
   NO_COUNT: "—",
   NO_TOTAL: "—",
 };
@@ -24,6 +25,7 @@ const HISTORICAL_SENSOR_DATA_MESSAGE = {
   NO_PRESSURE_HISTORY: "No pressure history available for selected date range.",
   NO_TEMPERATURE_HISTORY:
     "No temperature history available for selected date range.",
+  NO_SALINITY_HISTORY: "No salinity history available for selected date range.", //  Sreedhar
   NO_COUNT_HISTORY: "No count history available for selected date range.",
   NO_TOTAL_HISTORY: "No total history available for selected date range.",
 };

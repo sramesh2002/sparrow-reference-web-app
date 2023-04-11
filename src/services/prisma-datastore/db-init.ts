@@ -201,6 +201,20 @@ const standardSchemas: BareReadingSchema[] = [
     },
   },
   {
+    name: NodeSensorTypeNames.SALINITY,
+    measure: "salinity",
+    uuid: "6edaf612-23fa-4a34-b567-e2345892c3f9",
+    displayName: referenceSensorName("Salinity"),
+    displayMeasure: "Salinity",
+    eventName: nodeEvent(air.qo),
+    valueType: ReadingSchemaValueType.SCALAR_FLOAT,
+    unit: "parts per million",
+    unitSymbol: "ppm",
+    spec: {
+      salinity: 1280.2,
+    },
+  },
+  {
     name: NodeSensorTypeNames.TEMPERATURE,
     measure: "temperature",
     uuid: "8cfb013c-ab5f-4f0a-9530-9c56f51e3640",

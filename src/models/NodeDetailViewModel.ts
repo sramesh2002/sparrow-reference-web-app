@@ -12,6 +12,7 @@ interface NodeDetailViewModel {
     humidity: string;
     pressure: string;
     voltage: string;
+    salinity: string; //  Sreedhar
     count: string;
     total: string;
     bars: SignalStrengths;
@@ -23,6 +24,7 @@ interface NodeDetailViewModel {
     humidity: { when: string; value: number }[];
     pressure: { when: string; value: number }[];
     voltage: { when: string; value: number }[];
+    salinity: { when: string; value: number }[]; // Sreedhar
     count: { when: string; value: number }[];
     total: { when: string; value: number }[];
   };

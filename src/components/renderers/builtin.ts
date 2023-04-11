@@ -15,7 +15,7 @@ export function registerRenderers(
   const textRendererTypes = [
     AppModel.GatewaySensorTypeNames.VOLTAGE,
     AppModel.GatewaySensorTypeNames.TEMPERATURE,
-
+    AppModel.NodeSensorTypeNames.SALINITY,
     AppModel.NodeSensorTypeNames.TEMPERATURE,
     AppModel.NodeSensorTypeNames.HUMIDITY,
     AppModel.NodeSensorTypeNames.AIR_PRESSURE,

@@ -14,6 +14,7 @@ interface NotehubDevice {
   triangulated_location?: NotehubLocation;
   voltage: number;
   temperature: number;
+  salinity: number;
 }
 
 export default NotehubDevice;

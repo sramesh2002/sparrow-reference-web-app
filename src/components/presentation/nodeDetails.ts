@@ -10,6 +10,7 @@ import {
   getFormattedLastSeen,
   getFormattedPressureData,
   getFormattedTemperatureData,
+  getFormattedSalinityData,
   getFormattedVoltageData,
   getFormattedCountData,
   getFormattedTotalData,
@@ -23,6 +24,7 @@ import TemperatureSensorSchema from "../../services/alpha-models/readings/Temper
 import HumiditySensorSchema from "../../services/alpha-models/readings/HumiditySensorSchema";
 import PressureSensorSchema from "../../services/alpha-models/readings/PressureSensorSchema";
 import VoltageSensorSchema from "../../services/alpha-models/readings/VoltageSensorSchema";
+import SalinitySensorSchema from "../../services/alpha-models/readings/SalinitySensorSchema";
 import CountSensorSchema from "../../services/alpha-models/readings/CountSensorSchema";
 import TotalSensorSchema from "../../services/alpha-models/readings/TotalSensorSchema";
 import Config from "../../../config";
@@ -51,6 +53,9 @@ export function getNodeDetailsPresentation(
           pressure:
             getFormattedPressureData(node.pressure) ||
             SENSOR_MESSAGE.NO_PRESSURE,
+          salinity:
+            getFormattedSalinityData(node.salinity) ||
+            SENSOR_MESSAGE.NO_SALINITY,
           voltage:
             getFormattedVoltageData(node.voltage) || SENSOR_MESSAGE.NO_VOLTAGE,
           count: getFormattedCountData(node.count) || SENSOR_MESSAGE.NO_COUNT,
@@ -66,6 +71,7 @@ export function getNodeDetailsPresentation(
           temperature: getFormattedChartData(readings, TemperatureSensorSchema),
           humidity: getFormattedChartData(readings, HumiditySensorSchema),
           pressure: getFormattedChartData(readings, PressureSensorSchema),
+          salinity: getFormattedChartData(readings, SalinitySensorSchema),
           voltage: getFormattedChartData(readings, VoltageSensorSchema),
           count: getFormattedChartData(readings, CountSensorSchema),
           total: getFormattedChartData(readings, TotalSensorSchema),

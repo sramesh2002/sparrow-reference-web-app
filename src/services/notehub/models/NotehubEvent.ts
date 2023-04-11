@@ -15,6 +15,7 @@ interface NotehubEvent extends SessionMetadata, NotehubLocationAlternatives {
     humidity?: number;
     pressure?: number;
     temperature?: number;
+    salinity?: number;
     voltage?: number;
     total?: number;
     text?: string;

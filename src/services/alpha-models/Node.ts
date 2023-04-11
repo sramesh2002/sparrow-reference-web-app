@@ -6,6 +6,7 @@ interface Node {
   location?: string;
   humidity?: number;
   pressure?: number;
+  salinity?: number;
   temperature?: number;
   voltage?: number;
   lastActivity: string;

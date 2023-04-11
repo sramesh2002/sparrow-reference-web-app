@@ -3,4 +3,5 @@ export type SessionMetadata = {
   bars?: number;
   voltage?: number;
   temp?: number;
+  salinity?: number;
 };

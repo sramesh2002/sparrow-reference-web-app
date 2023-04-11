@@ -92,6 +92,11 @@ const NodeCardComponent = (props: NodeProps) => {
           <span className="dataNumber">{viewModel?.node?.pressure}</span>
         </Col>
         <Col xs={8} sm={5} md={5} lg={8}>
+          Salinity
+          <br />
+          <span className="dataNumber">{viewModel?.node?.salinity}</span>
+        </Col>
+        <Col xs={8} sm={5} md={5} lg={8}>
           Temperature
           <br />
           <span className="dataNumber">{viewModel?.node?.temperature}</span>

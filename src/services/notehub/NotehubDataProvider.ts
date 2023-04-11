@@ -20,6 +20,7 @@ import HumiditySensorReading from "../alpha-models/readings/HumiditySensorReadin
 import PressureSensorReading from "../alpha-models/readings/PressureSensorReading";
 import VoltageSensorReading from "../alpha-models/readings/VoltageSensorReading";
 import CountSensorReading from "../alpha-models/readings/CountSensorReading";
+import SalinitySensorReading from "../alpha-models/readings/SalinitySensorReading";
 import TotalSensorReading from "../alpha-models/readings/TotalSensorReading";
 import {
   GatewayWithNodes,
@@ -185,6 +186,7 @@ export default class NotehubDataProvider implements DataProvider {
         gatewayUID,
         nodeId: event.file,
         humidity: event.body.humidity,
+        salinity: event.body.salinity,
         // Convert from Pa to kPa
         pressure: event.body.pressure ? event.body.pressure / 1000 : undefined,
         temperature: event.body.temperature,
@@ -210,6 +212,7 @@ export default class NotehubDataProvider implements DataProvider {
         nodeId: nodeEvent.nodeId.split("#")[0],
         humidity: nodeEvent.humidity,
         pressure: nodeEvent.pressure,
+        salinity: nodeEvent.salinity,
         temperature: nodeEvent.temperature,
         voltage: nodeEvent.voltage,
         count: nodeEvent.count,
@@ -287,6 +290,9 @@ export default class NotehubDataProvider implements DataProvider {
         ...(gatewayNodeInfo.temperature && {
           temperature: gatewayNodeInfo.temperature,
         }),
+        ...(gatewayNodeInfo.salinity && {
+          salinity: gatewayNodeInfo.salinity,
+        }),
         ...(gatewayNodeInfo.count && {
           count: gatewayNodeInfo.count,
         }),
@@ -356,6 +362,14 @@ export default class NotehubDataProvider implements DataProvider {
         readingsToReturn.push(
           new HumiditySensorReading({
             value: event.body.humidity,
+            captured: event.captured,
+          })
+        );
+      }
+      if (event.body.salinity) {
+        readingsToReturn.push(
+          new SalinitySensorReading({
+            value: event.body.salinity,
             captured: event.captured,
           })
         );
